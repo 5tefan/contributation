@@ -59,7 +59,7 @@ i=(0 1 2 3 4 5 6) # just a bar to go with N
 s=() #space, should be empty, not used right now
 
 #create file and initial commit on the dstart date
-touch $filename
+echo "start" > $filename
 git add $filename
 git commit -m "heyy"
 num_chars=0
@@ -74,10 +74,10 @@ if [ "$(uname)" == "Darwin" ]; then
 		counter=0
 		while [ $counter -lt $num_commits ]; do
 			eval "for offset in \"\${$char[@]}\"; do
-				echo \".\" >> $filename
-				git add $filename > /dev/null
-				git commit -m \"heyy\" > /dev/null
-				GIT_COMMITTER_DATE=\$(date -v-sunday -v-51w -v+$((num_chars*3*7+num_spaces*7))d -v+\"\$offset\"d +%s) git commit --amend --date=\"\$(date -v-sunday -v-51w -v+$((num_chars*3*7+num_spaces*7))d -v+\"\$offset\"d +%s)\" -m \"heyy\" > /dev/null
+				echo \"$char $counter \$offset\" >> $filename
+				git add $filename
+				git commit -m \"heyy\"
+				GIT_COMMITTER_DATE=\$(date -v-sunday -v-51w -v+$((num_chars*3*7+num_spaces*7))d -v+\"\$offset\"d +%s) git commit --amend --date=\"\$(date -v-sunday -v-51w -v+$((num_chars*3*7+num_spaces*7))d -v+\"\$offset\"d +%s)\" -m \"heyy\"
 			done" #end eval
 			let counter=counter+1
 		done
@@ -87,4 +87,4 @@ fi
 
 git rm $filename
 git commit -m "heyy"
-#git push origin master
+git push origin master
